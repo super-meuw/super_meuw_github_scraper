@@ -1,20 +1,4 @@
 ```markdown
-# 🐱 super-meuw-github-scraper
-
-<div align="center">
-
-![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Status](https://img.shields.io/badge/status-stable-brightgreen)
-![Git](https://img.shields.io/badge/git-clone-orange)
-![Meuw](https://img.shields.io/badge/meuw-powered-ff69b4)
-
-**The Meuw-tastic GitHub Explorer & Downloader**  
-*Search and clone any GitHub repository with the power of meuw!* 🐱
-
-</div>
-
----
 
 ## 📖 What is super-meuw-github-scraper?
 
