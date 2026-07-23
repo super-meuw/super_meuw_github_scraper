@@ -1,4 +1,4 @@
-```markdown
+
 
 ## 📖 What is super-meuw-github-scraper?
 
@@ -48,7 +48,6 @@ brew install git
 
 # On Windows
 # Download from https://git-scm.com/download/win
-```
 
 ### Step 2: Clone or Download the Tool
 ```bash
