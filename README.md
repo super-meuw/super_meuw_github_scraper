@@ -6,27 +6,28 @@
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-stable-brightgreen)
+![Git](https://img.shields.io/badge/git-clone-orange)
 ![Meuw](https://img.shields.io/badge/meuw-powered-ff69b4)
 
 **The Meuw-tastic GitHub Explorer & Downloader**  
-*Find and download any GitHub repository with the power of meuw!*
-
-[Installation](#-installation) • [Usage](#-usage) • [Features](#-features) • [Screenshots](#-screenshots) • [Contributing](#-contributing)
+*Search and clone any GitHub repository with the power of meuw!* 🐱
 
 </div>
 
 ---
 
-## 🎯 What is super-meuw-github-scraper?
+## 📖 What is super-meuw-github-scraper?
 
-**super-meuw-github-scraper** is a powerful command-line tool that lets you search GitHub repositories by any keyword, view detailed results in a beautiful table, and download your chosen repositories with just a few keystrokes. It's designed to be fast, user-friendly, and visually appealing with a cute meuw touch! 🐱
+**super-meuw-github-scraper** is a powerful command-line tool that lets you search GitHub repositories by any keyword, view detailed results in a beautiful table, and clone your chosen repositories with just a few keystrokes. It's designed to be fast, user-friendly, and visually appealing with a cute meuw touch!
 
 ### Why use this tool?
 - 🔍 **Search GitHub** without opening your browser
 - 📊 **Beautiful terminal UI** with rich tables and progress bars
-- ⬇️ **Download any repository** as a ZIP file
-- 🚀 **Batch download** all results with a single command
-- 🎨 **Colorful and interactive** experience
+- ⬇️ **Clone any repository** using native `git clone` (full history included)
+- 🚀 **Batch clone** all results with a single command
+- 🔐 **GitHub Token support** to increase API rate limits (5000 requests/hour)
+- 📅 **Smart duplicate handling** – adds today's date to folder name if already exists
+- 🎨 **Colorful and interactive** experience with ASCII cat banner
 
 ---
 
@@ -36,10 +37,12 @@
 |---------|-------------|
 | 🔎 **Smart Search** | Search GitHub repositories by keyword, sorted by stars |
 | 📊 **Beautiful Display** | Clean table with repository info (stars, forks, language, description) |
-| ⬇️ **One-Click Download** | Enter a number to download any repository instantly |
-| 📦 **Batch Download** | Use `ALL` to download every repository in your search results |
-| 🎯 **Progress Tracking** | Real-time progress bars for downloads |
-| 🗂️ **Auto-Extract** | Downloaded ZIP files are automatically extracted |
+| ⬇️ **One-Click Clone** | Enter a number to clone any repository instantly |
+| 📦 **Batch Clone** | Use `ALL` to clone every repository in your search results |
+| 🎯 **Progress Tracking** | Real-time progress bars for search and clone operations |
+| 🔐 **Token Support** | Optional GitHub token for higher API rate limits (5000/h) |
+| 📅 **Duplicate Handling** | Automatically adds date to folder name if a directory already exists |
+| 🗂️ **Full Git History** | Uses `git clone` to preserve all commits and branches |
 | 🐱 **Meuw Design** | Colorful, cat-themed interface with super-meuw branding |
 
 ---
@@ -47,10 +50,23 @@
 ## 📦 Installation
 
 ### Prerequisites
-- Python 3.8 or higher
+- **Python 3.8** or higher
+- **Git** installed and available in PATH
 - pip (Python package installer)
 
-### Step 1: Clone or Download
+### Step 1: Install Git (if not already installed)
+```bash
+# On Debian/Ubuntu/Kali
+sudo apt install git
+
+# On macOS (with Homebrew)
+brew install git
+
+# On Windows
+# Download from https://git-scm.com/download/win
+```
+
+### Step 2: Clone or Download the Tool
 ```bash
 # Clone the repository
 git clone https://github.com/super-meuw/super-meuw-github-scraper.git
@@ -60,7 +76,7 @@ cd super-meuw-github-scraper
 wget https://raw.githubusercontent.com/super-meuw/super-meuw-github-scraper/main/super_meuw_github_scraper.py
 ```
 
-### Step 2: Install Dependencies
+### Step 3: Install Dependencies
 
 #### Option A: Using Virtual Environment (Recommended)
 ```bash
@@ -104,12 +120,22 @@ python super_meuw_github_scraper.py
    python super_meuw_github_scraper.py
    ```
 
-2. **Enter your search term** when prompted:
+2. **Enter your GitHub token (optional)** when prompted:
+   ```
+   🔑 GitHub Token (Optional)
+   Enter your GitHub Personal Access Token to increase API rate limits.
+   Without token: 60 requests/hour
+   With token: 5000 requests/hour
+   ```
+   - Press Enter to skip (use unauthenticated mode)
+   - Or paste your token for higher limits
+
+3. **Enter your search term** when prompted:
    ```
    🔍 Enter your search term: fastapi
    ```
 
-3. **View the results** in a beautiful table:
+4. **View the results** in a beautiful table:
    ```
    ┌───┬─────────────────────┬──────────────┬────────┬────────┬──────────┐
    │ # │ Repository          │ Description  │ ⭐ Stars│ 🔀 Forks│ Language │
@@ -119,17 +145,16 @@ python super_meuw_github_scraper.py
    └───┴─────────────────────┴──────────────┴────────┴────────┴──────────┘
    ```
 
-4. **Choose what to do**:
-   - Enter a **number** (e.g., `1`) to download that repository
-   - Enter `ALL` to download all repositories
+5. **Choose what to do**:
+   - Enter a **number** (e.g., `1`) to clone that repository
+   - Enter `ALL` to clone all repositories
    - Enter `exit` to quit
 
-5. **Watch the download progress**:
+6. **Watch the clone progress**:
    ```
-   🐱 Downloading tiangolo/fastapi...
-   ⬇️ Downloading fastapi... [████████████████████████████] 100%
-   📦 Extracting fastapi...
-   ✅ Successfully downloaded and extracted tiangolo/fastapi!
+   🐱 Cloning tiangolo/fastapi...
+   📥 Cloning into /home/user/super-meuw-downloads/tiangolo_fastapi...
+   ✅ Successfully cloned tiangolo/fastapi!
    📁 Location: /home/user/super-meuw-downloads/tiangolo_fastapi
    ```
 
@@ -137,56 +162,105 @@ python super_meuw_github_scraper.py
 ```bash
 $ python super_meuw_github_scraper.py
 
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                                                                              ║
-║    ███████╗██╗   ██╗██████╗ ███████╗██████╗     ███╗   ███╗███████╗██╗   ██╗║
-║    ██╔════╝██║   ██║██╔══██╗██╔════╝██╔══██╗    ████╗ ████║██╔════╝██║   ██║║
-║    ███████╗██║   ██║██████╔╝█████╗  ██████╔╝    ██╔████╔██║█████╗  ██║   ██║║
-║    ╚════██║██║   ██║██╔═══╝ ██╔══╝  ██╔══██╗    ██║╚██╔╝██║██╔══╝  ██║   ██║║
-║    ███████║╚██████╔╝██║     ███████╗██║  ██║    ██║ ╚═╝ ██║███████╗╚██████╔╝║
-║    ╚══════╝ ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝    ╚═╝     ╚═╝╚══════╝ ╚═════╝ ║
-║                                                                              ║
-║    ╔═══════════════════════════════════════════════════════════════════════╗  ║
-║    ║  🐱  S U P E R - M E U W   G I T H U B   S C R A P E R  🐱       ║  ║
-║    ║     "The Meuw-tastic GitHub Explorer & Downloader"                   ║  ║
-║    ║                                                                      ║  ║
-║    ║     🌟 Search  •  📊 Analyze  •  ⬇️ Download  •  🚀 Enjoy         ║  ║
-║    ╚═══════════════════════════════════════════════════════════════════════╝  ║
-║                                                                              ║
-║    👤 Creator: super-meuw                                                    ║
-║    📦 Version: 1.0.0                                                         ║
-║    🎯 Purpose: Find and download any GitHub repo with ease!                  ║
-║                                                                              ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+                         ,
+  ,-.       _,---._ __  / \
+ /  )    .-'       `./ /   \
+(  (   ,'            `/    /|
+ \  `-"             \'\   / |
+  `.              ,  \ \ /  |
+   /`.          ,'-`----Y   |
+  (            ;        |   '
+  |  ,-.    ,-'         |  /
+  |  | (   |            | /
+  )  |  \  `.___________|/
+  `--'   `--'
+
+   🐱  SUPER-MEUW GITHUB SCRAPER  🐱
+   "Searching the GitHub universe with meuw power!"
+   
+   Created by: super-meuw
+
+🐾 Ready to search the GitHub universe! 🐾
+
+╭──────────────────────────────────────────────────────────────────── 🔐 Authentication ────────────────────────────────────╮
+│ 🔑 GitHub Token (Optional)                                                                                               │
+│ Enter your GitHub Personal Access Token to increase API rate limits.                                                     │
+│ Without token: 60 requests/hour                                                                                          │
+│ With token: 5000 requests/hour                                                                                           │
+│                                                                                                                          │
+│ How to get a token:                                                                                                      │
+│ 1. Go to https://github.com/settings/tokens                                                                              │
+│ 2. Click 'Generate new token (classic)'                                                                                  │
+│ 3. Give it a name, select 'repo' and 'public_repo' scopes                                                                │
+│ 4. Generate and copy the token                                                                                           │
+│                                                                                                                          │
+│ Press Enter to continue without token                                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+Paste your token (or press Enter to skip): 
+⚠️  No token provided. Using unauthenticated API (60 requests/hour).
 
 🔍 Enter your search term: machine learning
 🔎 Searching for 'machine learning'...
-🐱 Found 15 Meuw-tastic repositories!
+✅ Retrieved 30 repositories (total available: 347)
+🐱 Found 30 Meuw-tastic repositories!
 ... (table displayed here)
 
 👉 Enter your choice: ALL
-🐱 Downloading ALL repositories! Hold tight! 🐱
-... (downloads all repositories)
+🐱 Cloning ALL repositories! Hold tight! 🐱
+... (clones all repositories)
 ```
 
 ---
 
 ## 📁 Output Directory Structure
 
-All downloaded repositories are saved in the `super-meuw-downloads/` folder:
+All cloned repositories are saved in the `super-meuw-downloads/` folder with full Git history:
 
 ```
 super-meuw-downloads/
 ├── tiangolo_fastapi/
+│   ├── .git/
 │   ├── fastapi/
 │   ├── tests/
 │   └── ...
 ├── scikit-learn_scikit-learn/
+│   ├── .git/
 │   ├── sklearn/
 │   ├── examples/
 │   └── ...
 └── ...
 ```
+
+### Duplicate Handling
+If a folder with the same name already exists, the tool automatically adds today's date to the new folder name:
+
+```
+super-meuw-downloads/
+├── owner_repo/                    # Existing folder
+├── 2026-07-23_owner_repo/         # New clone from today
+└── ...
+```
+
+This prevents overwriting and preserves your work.
+
+---
+
+## 🔑 Getting a GitHub Token (Optional)
+
+To increase your API rate limit from 60 to 5000 requests per hour:
+
+1. Go to [GitHub Settings → Tokens](https://github.com/settings/tokens)
+2. Click **"Generate new token (classic)"**
+3. Give it a descriptive name (e.g., "super-meuw-scraper")
+4. Select the following scopes:
+   - ✅ `repo` (Full control of private repositories)
+   - ✅ `public_repo` (Access public repositories)
+5. Click **"Generate token"**
+6. **Copy the token immediately** (you won't see it again!)
+7. Paste it when prompted by the tool
+
+> **Note:** You can also press Enter to skip token entry and use the unauthenticated mode (60 requests/hour).
 
 ---
 
@@ -198,20 +272,16 @@ super-meuw-downloads/
 |-------|----------|
 | **"externally-managed-environment" error** | Use a virtual environment or pipx (see Installation) |
 | **"ModuleNotFoundError: No module named 'rich'"** | Install rich: `pip install rich` |
-| **Slow downloads** | GitHub API has rate limits; wait a few minutes |
-| **No results found** | Try a different search term or check your internet |
+| **"git is not installed"** | Install git: `sudo apt install git` (Linux) or download from git-scm.com |
+| **Clone fails with 404 or timeout** | Repository may be private or very large. Check your token permissions. |
+| **No results found** | Try a different search term or check your internet connection |
+| **Rate limit exceeded** | Use a GitHub token to increase limit to 5000/hour |
 
 ### GitHub API Rate Limits
-- Unauthenticated: 60 requests per hour
-- Authenticated: 5,000 requests per hour
+- **Unauthenticated:** 60 requests per hour
+- **Authenticated (with token):** 5,000 requests per hour
 
-To increase your rate limit, you can add a GitHub token:
-```python
-# In the code, add this to the __init__ method:
-self.session.headers.update({
-    "Authorization": "token YOUR_GITHUB_TOKEN_HERE"
-})
-```
+> **Tip:** Each search request fetches 10 repositories. For 30 results, you need 3 requests. With a token, you can perform up to 5000 requests per hour – plenty for heavy searching!
 
 ---
 
@@ -226,40 +296,19 @@ Contributions are welcome! Here's how you can help:
 5. **Open a Pull Request**
 
 ### Ideas for Contribution
-- Add support for GitHub authentication
-- Implement advanced search filters
-- Add a GUI version
-- Support for downloading specific branches
-- Add parallel downloads
+- Add support for cloning specific branches (`--branch`)
+- Implement shallow clones (`--depth 1`) for faster downloads
+- Add advanced search filters (language, stars range, date)
 - Export results to CSV/JSON
+- Add a GUI version
+- Support for private repositories with SSH keys
 
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- [Rich](https://github.com/Textualize/rich) - For beautiful terminal formatting
-- [GitHub API](https://docs.github.com/en/rest) - For powering the search
-- All the meowtastic open-source developers out there! 🐱
-
----
-
-## 📞 Contact & Support
-
-- **Creator**: super-meuw
-- **Issues**: [GitHub Issues](https://github.com/super-meuw/super-meuw-github-scraper/issues)
-- **Email**: [super-meuw@example.com](mailto:super-meuw@example.com)
 
 ---
 
 <div align="center">
 
-**Made with ❤️ and lots of ☕ by super-meuw**
+**Made by super-meuw**
 
 *"Finding code with the power of meuw!"* 🐱
 
