@@ -81,6 +81,15 @@ pipx ensurepath
 pipx install requests rich
 ```
 
+#### If you run into a problem on Linux, just enter the following command in the correct directory—and—bang!
+
+```bash
+python3 -m venv meuw-env
+source meuw-env/bin/activate
+pip install requests rich
+python super_meuw_github_scraper.py
+```
+
 #### Option C: System-wide (Not recommended)
 ```bash
 # ⚠️ This may cause conflicts on some systems
