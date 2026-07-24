@@ -81,7 +81,7 @@ pipx ensurepath
 pipx install requests rich
 ```
 
-#### If you run into a problem on Linux, just enter the following command in the correct directory—and—bang!
+#### If you run into a problem on Linux,just enter the following command in the correct directory and bang!
 
 ```bash
 python3 -m venv meuw-env
